@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Goodreads Web Component</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+        <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+        <link rel="import" href="my-goodreads-widget.html">
+
+    </head>
+    <body>
+        <div class="container" role="main">
+            <div class="jumbotron">
+                <h1>Goodreads Web Component</h1>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading"><h2>Summary</h2></div>
+                <div class="panel-body">
+                    <p>
+                        Create a Goodreads Web Component to achieve this use the power and simplification of
+                        <a href="https://www.polymer-project.org/" target="_blank">Polymer 2</a>
+                        <br />
+                        This web component will help users to search for books.
+                    </p>
+                </div>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading"><h2>Expected results</h2></div>
+                <div class="panel-body">
+                    <ol class="list-group">
+                        <li class="list-group-item">Organize well your dependencies, use your favorites tools to 
+                        organize and maintain all code dependencies for vendors</li>
+                        <li class="list-group-item">
+                            Build a custom element with Polymer 2 to output a small widget for
+                            book search in Goodreads.
+                            The required custom element is declared in this file. We need you to identify it and to implement it.
+                        </li>
+                        <li class="list-group-item">
+                            To help you with this task a simple PHP connector is attached
+                            with this project.
+                            <ul>
+                                <li>Configure a local PHP webserver to process the index.php file</li>
+                                <li>To perform a search you just need to do the following request<br/>
+                                    <code>
+                                        http://yourlocalwebserver/index.php?query=example&amp;page=1&amp;field=all
+                                    </code>
+                                </li>
+                                <li>The query parameter is the search value</li>
+                                <li>The page parameter the pagination value</li>
+                                <li>The field parameter is the field where to search, options are title, author and all</li>
+                                <li>It should return a json response</li>
+                                <li>This small PHP lib has a cache folder as a dependency, make sure you have the correct file permissions</li>
+                            </ul>
+                        </li>
+                        <li class="list-group-item">
+                            The search request should be done in a self contained custom element
+                        </li>
+                        <li class="list-group-item">
+                            The main custom element should be the orquestrator between any custom elements you decide to create
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading"><h2>The web component</h2></div>
+                <div class="panel-body">
+                    Create Goodreads Web Component here
+                    <my-goodreads-widget></my-goodreads-widget>
+                </div>
+            </div>
+        </div>
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    </body>
+</html>

@@ -1,0 +1,108 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../paper-radio-group/paper-radio-group.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-styles/color.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="search-form.html">
+
+
+<dom-module id="my-goodreads-widget">
+	<template>
+		<style include="iron-flex iron-flex-alignment"></style>
+		<style>
+			paper-button {
+				font-family: 'Roboto', 'Noto', sans-serif;
+				font-weight: normal;
+				font-size: 14px;
+				-webkit-font-smoothing: antialiased;
+				margin-bottom: 15px;
+			}
+
+			paper-button.indigo {
+				background-color: var(--paper-indigo-500);
+				color: white;
+				border:1px solid  var(--paper-indigo-500);
+				--paper-button-raised-keyboard-focus: {
+					background-color: var(--paper-pink-a200) !important;
+					color: white !important;
+				};
+
+			}
+			paper-button.indigo:hover {
+				background-color: var(--paper-indigo-400);
+			}
+
+			paper-button.disabled {
+				border:1px solid  var(--paper-indigo-500);
+				background-color: white;
+				color: var(--paper-indigo-500);
+			}
+		</style>
+
+
+		<div>
+			<paper-input name="search" label="Search" value="{{book::change}}">
+				<iron-icon icon="search" slot="prefix"></iron-icon>
+			</paper-input>
+		</div>
+
+		<div class="horizontal around-justified layout">
+			<div >
+				<paper-radio-group selected="{{selectedName}}">
+					<paper-radio-button name="all" checked>All</paper-radio-button>
+					<paper-radio-button name="title">Title</paper-radio-button>
+					<paper-radio-button name="author">Author</paper-radio-button>
+				</paper-radio-group>
+			</div>
+			<div>
+				<paper-button class="indigo" on-click="handlePreviousPage">Previous</paper-button>
+				<paper-button class="indigo" on-click="handleNextPage">Next</paper-button>
+				<paper-button disabled class="disabled">Page {{page}}</paper-button>
+			</div>
+		</div>
+
+		<search-form book="{{book}}" field="{{selectedName}}" page="{{page}}"></search-form>
+
+	</template>
+
+	<script>
+		
+		class GoodReadsWidget extends Polymer.Element{
+
+			static get is() { return "my-goodreads-widget"}
+
+			constructor() {
+				super();
+			}
+
+			static get properties() {
+				return {
+					page:{
+						type: Number,
+						value: 1
+					}
+				}
+			}
+
+			handleNextPage(){
+				this.page += 1;
+			}
+
+			handlePreviousPage(){
+				if((this.page - 1) > 0){
+					this.page -= 1
+				}
+			}
+
+
+		}
+
+		customElements.define(GoodReadsWidget.is, GoodReadsWidget);
+
+	</script>>
+
+</dom-module>

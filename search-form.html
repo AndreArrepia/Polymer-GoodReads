@@ -1,0 +1,158 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../paper-styles/color.html">
+
+
+<dom-module id="search-form">
+	<template>
+		<style include="iron-flex iron-flex-alignment"></style>
+
+		<style>
+
+			.my_flex_container{
+				display: flex;
+				align-items: center;
+				border-bottom: 1px solid #ddd;
+			}
+
+			.my_flex_container > img{
+				display: flex;
+				flex-grow: 0;
+				flex-shrink: 0;
+			}
+
+			.my_flex_container > p{
+				padding: 0px 15px;
+			}
+
+			.book_margin{
+				padding: 15px 0px;	
+			}
+
+			.book_info{
+				display: flex;
+				flex-direction: column;
+				margin: 0px 15px;
+				width:100%;
+			}
+
+			.book_ratings{
+				display: flex;
+			}
+
+			.book_ratings .stock{
+				display: flex;
+				justify-content: flex-start;
+				width: 50%;
+				align-items: center;
+			}
+
+			.book_ratings .ratings{
+				display: flex;
+				justify-content: flex-end;
+				width: 50%;
+				align-items: center;
+			}
+
+
+			.iron-icon{
+				color: var(--paper-indigo-500);
+			}
+
+		</style>
+
+
+		
+		<iron-ajax
+		auto
+		url="{{_url}}"
+		handle-as="json"
+		last-response="{{response}}"
+		></iron-ajax>
+
+		<div class="layout vertical wrap">
+			<template is="dom-repeat" items="{{_fixedResponse}}">
+				<div class="flex book_margin">
+					<div class="my_flex_container">
+						<img src="{{item.best_book.small_image_url}}" />
+						<div class="book_info">
+							<p><strong>{{item.best_book.title}}</strong>, <i>{{item.best_book.author.name}}, {{item.original_publication_year}}</i></p>
+							<div class="book_ratings">
+								<p class="stock"><iron-icon icon="dns" class="iron-icon" slot="prefix"></iron-icon><strong>Stock: </strong>{{item.books_count}}</p>
+								<p class="ratings">
+									<iron-icon icon="create" class="iron-icon" slot="prefix"></iron-icon><strong>Avg. Rating: </strong>{{item.average_rating}}
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</template>
+		</div>
+
+	</template>
+
+	<script>
+		
+		class SearchForm extends Polymer.Element{
+
+			static get is() { return "search-form"}
+
+			constructor() {
+				super();
+			}
+
+
+			static get properties() {
+				return {
+					response: {
+						type: Object,
+						observer: '_ajaxResponseChanged'
+					},
+
+					_fixedResponse: {
+						type: Array
+					},
+
+					book: {
+						type: String,
+						notify: true,
+						value: ""
+					},
+
+					field: {
+						type: String,
+						notify: true,
+						value: "all"
+					},
+
+					page:{
+						type: Number,
+						notify: true,
+						value: 1
+					},
+
+					_url: {
+						computed : 'computedURL(book, page, field)'
+					}
+				}
+			}
+
+			_ajaxResponseChanged(){
+				this._fixedResponse = this.response.search.results.work;
+				console.log(typeof this._fixedResponse === "object");
+			}
+
+			computedURL(book, page, field){
+				return ["http://localhost/books-api/index.php?query="+book+"&page="+page+"&field="+field];
+			}
+
+		}
+
+		customElements.define(SearchForm.is, SearchForm);
+
+	</script>>
+
+</dom-module>
